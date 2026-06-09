@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blood_Pressure_Tracker", "Blood_Pressure_Tracker.csproj", "{EE6D3D60-CC9C-4CD5-8EC5-1C284EA6DD99}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE6D3D60-CC9C-4CD5-8EC5-1C284EA6DD99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE6D3D60-CC9C-4CD5-8EC5-1C284EA6DD99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE6D3D60-CC9C-4CD5-8EC5-1C284EA6DD99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE6D3D60-CC9C-4CD5-8EC5-1C284EA6DD99}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

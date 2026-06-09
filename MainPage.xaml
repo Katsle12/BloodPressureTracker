@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:data="clr-namespace:Blood_Pressure_Tracker.Data"
+             xmlns:viewModel="clr-namespace:Blood_Pressure_Tracker.ViewModel"
+             x:Class="Blood_Pressure_Tracker.MainPage"
+             x:DataType="viewModel:MainPageViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label Text="Record measurement" HorizontalOptions="Center" VerticalOptions="Start"/>
+            
+            <Label Text="Systole value"/>
+            <Entry Keyboard="Numeric" ReturnType="Next"/>
+            <Label Text="Diastole value"/>
+            <Entry Keyboard="Numeric" ReturnType="Next"/>
+            <Label Text="Pulse value"/>
+            <Entry Keyboard="Numeric" ReturnType="Done" Text="{Binding Measuremement}"/>
+            
+            <Button Text="Record values"/>
+            
+            <Label Text="Average: "/>
+            
+            <CollectionView ItemsSource="">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Measurement">
+                        <HorizontalStackLayout>
+                            <Label Text="{Binding Systole}"/>
+                            <Label Text="{Binding Diastole}"/>
+                            <Label Text="{Binding Pulse}"/>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
