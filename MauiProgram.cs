@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Blood_Pressure_Tracker.ViewModel;
+using Microsoft.Extensions.Logging;
 
 namespace Blood_Pressure_Tracker;
 

@@ -10,23 +10,23 @@
         <VerticalStackLayout>
             <Label Text="Record measurement" HorizontalOptions="Center" VerticalOptions="Start"/>
             
-            <Label Text="Systole value"/>
+            <Label Text="Systolic value"/>
             <Entry Keyboard="Numeric" ReturnType="Next"/>
-            <Label Text="Diastole value"/>
+            <Label Text="Diastolic value"/>
             <Entry Keyboard="Numeric" ReturnType="Next"/>
             <Label Text="Pulse value"/>
-            <Entry Keyboard="Numeric" ReturnType="Done" Text="{Binding Measuremement}"/>
+            <Entry Keyboard="Numeric" ReturnType="Done" Text="{Binding Measurement}"/>
             
-            <Button Text="Record values"/>
+            <Button Text="Record values" Command="{Binding RecordMeasurementCommand}"/>
             
-            <Label Text="Average: "/>
+            <Label Text="{Binding AvgText}"/>
             
-            <CollectionView ItemsSource="">
+            <CollectionView ItemsSource="{Binding CurrentMeasurements}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="data:Measurement">
                         <HorizontalStackLayout>
-                            <Label Text="{Binding Systole}"/>
-                            <Label Text="{Binding Diastole}"/>
+                            <Label Text="{Binding Systolic}"/>
+                            <Label Text="{Binding Diastolic}"/>
                             <Label Text="{Binding Pulse}"/>
                         </HorizontalStackLayout>
                     </DataTemplate>

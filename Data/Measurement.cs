@@ -1,21 +1,34 @@
+
+
 namespace Blood_Pressure_Tracker.Data;
 
 public class Measurement
 {
-    public Measurement(int systole, int diastole, int pulse)
+    
+    
+    private int _systolic;
+    private int _diastolic;
+    private int _pulse;
+    private DateTime timeOfRecording;
+
+    public int Systolic => _systolic;
+
+    public int Diastolic => _diastolic;
+
+    public int Pulse => _pulse;
+    
+    public DateTime TimeOfRecording => timeOfRecording;
+
+    public Measurement(int systolic, int diastolic, int pulse, DateTime timeOfRecording)
     {
-        this.systole = systole;
-        this.diastole = diastole;
-        this.pulse = pulse;
+        this._systolic = systolic;
+        this._diastolic = diastolic;
+        this._pulse = pulse;
+        this.timeOfRecording = DateTime.Now;
     }
 
-    public int Systole => systole;
-
-    public int Diastole => diastole;
-
-    public int Pulse => pulse;
-
-    private int systole;
-    private int diastole;
-    private int pulse;
+    public Measurement()
+    {
+        
+    }
 }
