@@ -1,17 +1,11 @@
 namespace Blood_Pressure_Tracker.Data;
 
-public class Database
+public static class Database
 {
-    //CSV elérési útvonala
-    private string path;
-
-    public Database(string path)
-    {
-        this.path = path;
-    }
+   
 
     //Adatok betöltése a CSV fájlból
-    public async Task<List<Measurement>> LoadData()
+    public static async Task<List<Measurement>> LoadData(string path)
     {
         List<Measurement> measurements = new List<Measurement>();
         if(File.Exists(path))
@@ -20,15 +14,22 @@ public class Database
             foreach (string sor in file)
             {
                 string[] columns = sor.Split(',');
-                if (columns.Length == 4) 
-                    measurements.Add(new Measurement(int.Parse(columns[0]), int.Parse(columns[1]), int.Parse(columns[2]), DateTime.Parse(columns[3])));
+                if (columns.Length == 4)
+                    try
+                    {
+                        measurements.Add(new Measurement(int.Parse(columns[0]), int.Parse(columns[1]), int.Parse(columns[2]), DateTime.Parse(columns[3])));
+                    }
+                    catch (Exception e)
+                    {
+                        break;
+                    }
             }
         }
         return measurements;
     }
     
     //Adatok írása CSV fájlba
-    public async Task WriteData(List<Measurement> measurements)
+    public static async Task WriteData(List<Measurement> measurements, string path)
     {
         foreach (Measurement measurement in measurements)
         {

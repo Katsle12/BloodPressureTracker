@@ -11,20 +11,26 @@
             <Label Text="Record measurement" HorizontalOptions="Center" VerticalOptions="Start"/>
             
             <Label Text="Systolic value"/>
-            <Entry Keyboard="Numeric" ReturnType="Next"/>
+            <Entry Keyboard="Numeric" ReturnType="Next" Text="{Binding Measurement.Systolic}"/>
             <Label Text="Diastolic value"/>
-            <Entry Keyboard="Numeric" ReturnType="Next"/>
+            <Entry Keyboard="Numeric" ReturnType="Next" Text="{Binding Measurement.Diastolic}"/>
             <Label Text="Pulse value"/>
-            <Entry Keyboard="Numeric" ReturnType="Done" Text="{Binding Measurement}"/>
+            <Entry Keyboard="Numeric" ReturnType="Done" Text="{Binding Measurement.Pulse}" />
             
             <Button Text="Record values" Command="{Binding RecordMeasurementCommand}"/>
             
-            <Label Text="{Binding AvgText}"/>
+            <Label Text="{Binding AvgText}" Margin="0,10,0,10"/>
+            
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
+                <Button Command="{Binding LoadFileCommand}" Text="Load data from csv file"/>
+                <Button Command="{Binding SaveFileCommand}" Text="Save file to csv"/>
+            </HorizontalStackLayout>
+            
             
             <CollectionView ItemsSource="{Binding CurrentMeasurements}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="data:Measurement">
-                        <HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="1,1" HorizontalOptions="Center">
                             <Label Text="{Binding Systolic}"/>
                             <Label Text="{Binding Diastolic}"/>
                             <Label Text="{Binding Pulse}"/>
