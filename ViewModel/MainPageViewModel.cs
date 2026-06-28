@@ -11,6 +11,7 @@ namespace Blood_Pressure_Tracker.ViewModel;
 
 public partial class MainPageViewModel : ObservableObject
 {
+    #region fields
     //adattároló file
     private string path;
     
@@ -44,8 +45,10 @@ public partial class MainPageViewModel : ObservableObject
 
     //Egy mérés számainak átlaga formázva
     public string AvgText => $"Systolic: {AvgSys}, Diastolic: {AvgDia} Pulse: {AvgPul}";
+    #endregion
 
-    //ctor
+    //ctoradb start server
+    
     public MainPageViewModel()
     {
         _measurement = new Measurement(0, 0, 0,DateTime.Now); 
@@ -55,7 +58,7 @@ public partial class MainPageViewModel : ObservableObject
     }
     
     
-    
+    #region fileMethods
     public async Task<string?> PickCsvFileAsync()
     {
         try
@@ -89,7 +92,7 @@ public partial class MainPageViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            // Hibakezelés (pl. ha a felhasználó mégsem adott engedélyt a tárhelyhez)
+            // Hibakezelés
             System.Diagnostics.Debug.WriteLine($"Hiba a fájlválasztás során: {ex.Message}");
         }
 
@@ -108,13 +111,13 @@ public partial class MainPageViewModel : ObservableObject
             foreach (var measurement in m)
                 if (measurement != null)
                     _measurements.Add(measurement);
+            Shell.Current.DisplayAlert("Succes","Data has been loaded succesfully","Ok");
         }
         else Shell.Current.DisplayAlert("Hiba", "Fájl nem lett kiválasztva", "Ok");
     }
     
-    //Adatok elmentése
-    [RelayCommand]
-    private async Task SaveFile()
+    //Adatok elmentése fájlba
+    private async Task SaveToFileAsnyc()
     {
         if (path != null)
         {
@@ -141,50 +144,52 @@ public partial class MainPageViewModel : ObservableObject
             }
         }
     }
-
+#endregion
 
     //Új mérés rögzítése
     [RelayCommand]
-    private async Task RecordMeasurement()
+    private void RecordMeasurement()
     {
-       //Ha minden 0
-        if (Measurement.Systolic == 0 && Measurement.Diastolic == 0 && Measurement.Pulse == 0)
+        //Validálás és hozzáadás
+        if (ValidateMeasurement(Measurement))
         {
-            await Shell.Current.DisplayAlert("Hiba", "Az értékeknek nagyobbnak kell lennie 0-nál", "Ok");
-            return; // Stops execution right here
-        }
+            CurrentMeasurements.Add(new Measurement(Measurement.Systolic,Measurement.Diastolic,Measurement.Pulse,Measurement.TimeOfRecording));
+            
+            SetToZero();
 
-        // Ha valami 0
-        if (Measurement.Systolic <= 0)
+            //Tulajdonságok frissítése
+            OnPropertyChanged(nameof(AvgSys));
+            OnPropertyChanged(nameof(AvgDia));
+            OnPropertyChanged(nameof(AvgPul));
+            OnPropertyChanged(nameof(AvgText));
+            
+        }
+        else Shell.Current.DisplayAlert("Error", "Blood pressure values must be greater than 0", "Ok");
+    }
+    
+    //új mérés hozzáadása adatbázishoz
+    [RelayCommand]
+    private async Task SaveMeasurementAsync()
+    {
+        Measurement measurement = new Measurement(AvgSys, AvgDia, AvgPul, DateTime.Now);
+        if (ValidateMeasurement(measurement))
         {
-            await Shell.Current.DisplayAlert("Hiba", "Systolic értéknek nagyobbnak kell lennie 0-nál", "Ok");
-            return;
+            Measurements.Add(measurement);
+            await SaveToFileAsnyc();
         }
-
-        if (Measurement.Diastolic <= 0)
-        {
-            await Shell.Current.DisplayAlert("Hiba", "Diastolic értéknek nagyobbnak kell lennie 0-nál", "Ok");
-            return;
-        }
-
-        if (Measurement.Pulse <= 0)
-        {
-            await Shell.Current.DisplayAlert("Hiba", "Pulse értéknek nagyobbnak kell lennie 0-nál", "Ok");
-            return;
-        }
-
-        //Listához adás
-        CurrentMeasurements.Add(Measurement);
-        
-        //Tulajdonságok frissítése
-        OnPropertyChanged(nameof(AvgSys));
-        OnPropertyChanged(nameof(AvgDia));
-        OnPropertyChanged(nameof(AvgPul));
-        OnPropertyChanged(nameof(AvgText));
-
     }
 
-    
+    private bool ValidateMeasurement(Measurement measurement)
+    {
+        if (measurement.Systolic == 0 || measurement.Diastolic == 0 || measurement.Pulse == 0)
+            return false;
+        return true;
+    }
+
+    private void SetToZero()
+    {
+        Measurement = new Measurement(0, 0, 0, DateTime.Now);
+    }
 
 
 }

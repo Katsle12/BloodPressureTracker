@@ -23,7 +23,7 @@
             
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
                 <Button Command="{Binding LoadFileCommand}" Text="Load data from csv file"/>
-                <Button Command="{Binding SaveFileCommand}" Text="Save file to csv"/>
+                <Button Command="{Binding SaveMeasurementCommand}" Text="Save file to csv"/>
             </HorizontalStackLayout>
             
             
